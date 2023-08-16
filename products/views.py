@@ -5,5 +5,5 @@ from django.views import generic
 # Create your views here.
 
 
-class ProductList(generic.listView):
+class ProductList(generic.ListView):
     model = Products
