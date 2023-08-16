@@ -3,5 +3,10 @@ from .models import *
 # Register your models here.
 
 
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'price']
+    list_filter = ['name', 'price']
+    search_fields = ['name', 'price']
+
 admin.site.register(Customer)
-admin.site.register(Products)
+admin.site.register(Products, ProductAdmin)
