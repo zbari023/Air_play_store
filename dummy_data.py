@@ -1,5 +1,8 @@
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 import os , django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+django.setup()
+
+
 from faker import Faker
 import random
 from products.models import Products
@@ -16,10 +19,10 @@ def seed_product(n):
             name = fake.name(),
             price = round(random.uniform(200.99 , 999.99),2),
             image = f'products/{images[random.randint(0,5)]}'
+        )
     print(f'{n} products was successfuly')
             
-            
-        )
+    
         
         
         
