@@ -1,4 +1,5 @@
 from django.shortcuts import render
+
 from .models import Products , Customer
 from django.views import generic
 
