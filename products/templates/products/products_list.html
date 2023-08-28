@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% block body %}
   <!-- product section -->
-
+  <style>
+    .not-visible {
+        display: none;
+    }
+</style>
 
   <section class="product_section layout_padding">
     <div class="container">
@@ -49,10 +53,10 @@
         <span class="sr-only">Loading...</span>
     </div>
     <div class="load-more__btn mt-3" id="btn">
-        <button type="button" class="btn btn-success">Load More Post</button>
+        <button type="button" class="btn btn-success">View more</button>
     </div>
     <div class="alert alert-danger mt-2 not-visible" role="alert" id='alert'>
-        No more post to load!!
+        No more Products to load!!
     </div>
     </div>
     {{total_obj|json_script:"json-total"}}
@@ -85,7 +89,7 @@
                       content_container.innerHTML += `<div class="single_content col-sm-6 col-lg-4">
                         <div class="box">
                           <div class="img-box">
-                            <img src="{{product.image.url}}" alt="">
+                            <img src="${product.image.url}" alt="">
                             <a href="" class="add_cart_btn">
                               <span>
                                 Add To Cart
