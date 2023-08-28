@@ -19,11 +19,13 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 from settings.views import home
+from products.views import index, load_more
 
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path('admin/', admin.site.urls),
-    path('products/', include('products.urls')),
+    path('products/', index, name='index'),
+    path('load/', load_more, name='load'),
     path('', home),
     path("__debug__/", include("debug_toolbar.urls")),
 ]

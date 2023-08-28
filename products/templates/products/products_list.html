@@ -2,6 +2,7 @@
 {% block body %}
   <!-- product section -->
 
+
   <section class="product_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
@@ -9,46 +10,123 @@
           Our Products
         </h2>
       </div>
-      <div class="row">
-        {% for product in object_list  %}
-          <div class="col-sm-6 col-lg-4">
-          <div class="box">
-            <div class="img-box">
-              <img src="{{product.image.url}}" alt="">
-              <a href="" class="add_cart_btn">
-                <span>
-                  Add To Cart
-                </span>
-              </a>
-            </div>
-            <div class="detail-box">
-              <h5>
-                {{product}}
-              </h5>
-              <div class="product_info">
-                <h5>
-                  <span>$</span> {{product.price}}
-                </h5>
-                <div class="star_container">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
+      <div class="row" id="content">
+        {% for product in  posts %}
+          <div class="single_content col-sm-6 col-lg-4">
+              <div class="box">
+                <div class="img-box">
+                  <img src="{{product.image.url}}" alt="">
+                  <a href="" class="add_cart_btn">
+                    <span>
+                      Add To Cart
+                    </span>
+                  </a>
+                </div>
+                <div class="detail-box">
+                  <h5>
+                    {{product.name}}
+                  </h5>
+                  <div class="product_info">
+                    <h5>
+                      <span>$</span> {{product.price}}
+                    </h5>
+                    <div class="star_container">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
-          </div>
+
         {% endfor %}
 
       </div>
-      <div class="btn_box">
-        <a href="" class="view_more-link">
-          View More
-        </a>
-      </div>
+      <div class="spinner-border text-primary mt-2 not-visible" role="status" id="spinner">
+        <span class="sr-only">Loading...</span>
     </div>
+    <div class="load-more__btn mt-3" id="btn">
+        <button type="button" class="btn btn-success">Load More Post</button>
+    </div>
+    <div class="alert alert-danger mt-2 not-visible" role="alert" id='alert'>
+        No more post to load!!
+    </div>
+    </div>
+    {{total_obj|json_script:"json-total"}}
+    <script>
+      // var _current_item = $('.single_content').length
+      // console.log(_current_item);
+      const loadBtn = document.getElementById('btn');
+      const spinner = document.getElementById('spinner');
+      const total = JSON.parse(document.getElementById('json-total').textContent);
+      const alert = document.getElementById('alert');
+
+      function loadmorePost() {
+          var _current_item = $('.single_content').length
+          const content_container = document.getElementById("content");
+          $.ajax({
+              url: '{% url "load" %}',
+              type: 'GET',
+              data: {
+                  'offset': _current_item
+              },
+              beforeSend: function () {
+                  loadBtn.classList.add('not-visible');
+                  spinner.classList.remove('not-visible');
+              },
+              success: function (response) {
+                  const data = response.posts
+                  spinner.classList.add('not-visible')
+                  data.map(product => {
+                      console.log(product.name);
+                      content_container.innerHTML += `<div class="single_content col-sm-6 col-lg-4">
+                        <div class="box">
+                          <div class="img-box">
+                            <img src="{{product.image.url}}" alt="">
+                            <a href="" class="add_cart_btn">
+                              <span>
+                                Add To Cart
+                              </span>
+                            </a>
+                          </div>
+                          <div class="detail-box">
+                            <h5>
+                              ${product.name}
+                            </h5>
+                            <div class="product_info">
+                              <h5>
+                                <span>$</span> ${product.price}
+                              </h5>
+                              <div class="star_container">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>`
+                  })
+                  if (_current_item == total) {
+                      alert.classList.remove('not-visible');
+                  } else {
+                      loadBtn.classList.remove('not-visible');
+                  }
+              },
+              error: function (err) {
+                  console.log(err);
+              },
+          });
+      }
+      loadBtn.addEventListener('click', () => {
+          loadmorePost()
+      });
+  </script>
   </section>
 
   <!-- end product section -->
@@ -157,6 +235,5 @@
   </section>
 
   <!-- end info_section -->
-
 
   {% endblock body %}
