@@ -8,4 +8,4 @@ def home(request):
     return render(request,'settings/home.html',{'products':products})
 
 def about(request):
-    pass
+    return render(request,'settings/about.html',{})

@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
-from settings.views import home
+from settings.views import home , about
 from products.views import index, load_more
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('products/', index, name='index'),
     path('load/', load_more, name='load'),
     path('', home),
+    path('about/', about),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 
