@@ -23,6 +23,7 @@ from products.views import index, load_more
 
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
+    path('accounts/',include('accounts.urls')),
     path('admin/', admin.site.urls),
     path('products/', index, name='index'),
     path('load/', load_more, name='load'),
