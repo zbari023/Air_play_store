@@ -32,6 +32,7 @@ def profiluser(request):
     # Add other fields you want to retrieve
 
     return render(request, 'settings/profil_user.html', {
+        'user_profile' : user_profile ,
         'bio': bio,
         'profile_picture': profile_picture,
         'address': address,
