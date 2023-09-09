@@ -15,3 +15,6 @@ def why(request):
 
 def testimonial(request):
     return render(request,'settings/testimonial.html',{})
+
+def profiluser(request):
+    return render(request,'settings/profil_user.html',{})
