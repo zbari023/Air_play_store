@@ -1,5 +1,5 @@
 from products.models import Products
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.core import serializers
 
@@ -25,3 +25,4 @@ def load_more(request):
         'posts': post_obj
     }
     return JsonResponse(data=data)
+
