@@ -9,4 +9,6 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name', 'price']
 
 admin.site.register(Products, ProductAdmin)
-
+admin.site.register(Order)
+admin.site.register(OrderItem)
+admin.site.register(ShippingAddress)
